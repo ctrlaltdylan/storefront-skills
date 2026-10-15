@@ -1,6 +1,6 @@
 # storefront-skills
 
-Claude Code skills for Shopify merchants and developers.
+AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, and other agents that can drive a browser.
 
 ## Plugins
 
@@ -23,22 +23,27 @@ It stops at the checkout page and never enters or submits anything. Each run lea
 
 **Only run it on stores you own or have permission to test.**
 
-### Install
+### Run it with your AI assistant
 
-You need [Claude Code](https://claude.com/claude-code) and Node.js 18 or newer.
+**Claude** ([Claude in Chrome](https://claude.com/chrome), paid plans): open the extension and paste the prompt from [`PROMPT.md`](PROMPT.md), with your store's address filled in.
+
+**Grok** ([Grok Bot](https://x.ai)): start a new task and paste the prompt from [`PROMPT.md`](PROMPT.md). Grok Bot runs in its own cloud browser.
+
+**OpenClaw:** install the skill, then start a new session and ask it to check your store's checkout.
+
+```bash
+git clone https://github.com/ctrlaltdylan/storefront-skills.git
+openclaw skills install ./storefront-skills/plugins/storefront-security/skills/checkout-hijack-check
+```
+
+**Claude Code:** install the plugin, restart Claude Code, then run `/check-checkout https://yourstore.com`.
 
 ```bash
 claude plugin marketplace add ctrlaltdylan/storefront-skills
 claude plugin install storefront-security@storefront-skills
 ```
 
-Restart Claude Code, then run:
-
-```
-/check-checkout https://yourstore.com
-```
-
-Claude installs a headless browser in a temporary folder, runs the check, and explains the results.
+OpenClaw and Claude Code run the full script when Node.js 18 or newer is installed. Browser-only assistants follow the same steps by hand, but they can't inspect app API responses, so they won't catch a `WARN`.
 
 ### Run it without Claude Code
 

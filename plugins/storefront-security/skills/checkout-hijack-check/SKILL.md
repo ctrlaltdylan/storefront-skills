@@ -21,7 +21,7 @@ It alternates desktop and mobile across runs, since attacks can target one or th
 ## Before you start
 
 - **Only check stores the user owns or has permission to test.** Each run creates an abandoned checkout on the store, which is harmless but shows up in the admin. If the user names a store that isn't theirs, explain this and don't run it.
-- You need Node.js 18 or newer. Check with `node --version`.
+- **Pick a mode.** If you can run shell commands and Node.js 18 or newer is installed (check with `node --version`), use the script in the steps below. It's more thorough. If you can only control a browser, skip to [Browser-only mode](#browser-only-mode).
 
 ## Steps
 
@@ -41,7 +41,7 @@ npm i playwright@1.63.0 && npx playwright install chromium
 
 ### 3. Run the check
 
-Run from that same folder. The script lives next to this file in `scripts/`.
+Run from that same folder. The script lives next to this file in `scripts/`. In OpenClaw, that folder is `{baseDir}`.
 
 ```bash
 cd "${TMPDIR:-/tmp}/checkout-hijack-check"
@@ -76,6 +76,25 @@ Explain the result in plain language. Most merchants aren't developers.
 ### 5. Review the third-party script list
 
 The report lists every non-Shopify domain that loaded a script on the storefront. Go through it with the user. Each one should match an app they know they installed, or a service they use, like analytics or reviews. Flag anything they don't recognize.
+
+## Browser-only mode
+
+Use this when you can drive a browser but can't run commands, like Claude in Chrome or Grok Bot. Do 3 runs. Start each one in a **brand-new tab**, because the known attack stores its "already fired" flag in `sessionStorage`, which a new tab doesn't share.
+
+1. Open the store.
+2. Add any in-stock product to the cart, then go to `/cart`.
+3. Click **Checkout** once.
+4. Wait a few seconds, then note the full address of the page you land on. **Don't type anything on that page.**
+5. Go back to the store in the same tab. If you can run JavaScript, run `Object.keys(sessionStorage)` and note any key that starts with `__ctf_`.
+6. If you can see network requests, note any request to a domain in `scripts/indicators.json`.
+
+Then give a result:
+
+- **PASS:** every run landed on the store's own domain or a Shopify domain (`shopify.com`, `myshopify.com`, `shop.app`), and steps 5 and 6 found nothing.
+- **FAIL:** any run landed somewhere else, or steps 5 or 6 found something. Say exactly what you saw.
+- **INCONCLUSIVE:** you couldn't reach checkout. Say what got in the way.
+
+This mode can't see app API responses, so it won't catch a `WARN`. Mention that the script mode checks more if the user ever has a terminal.
 
 ## If the result is FAIL
 
