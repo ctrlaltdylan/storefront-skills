@@ -1,0 +1,26 @@
+{
+  "_comment": "Known indicators from the October 2026 Shopify checkout hijack campaign. Add new ones as they're published. Domains match the host and any subdomain.",
+  "domains": [
+    "biliing.top",
+    "checkout-confirm.top",
+    "order-confirm.top"
+  ],
+  "strings": [
+    "__ctf_shim_handoff_done_v1",
+    "__ctf_checkout_txn_v1",
+    "__ctf_shim"
+  ],
+  "sessionStorageKeyPatterns": [
+    "^__ctf_"
+  ],
+  "customCodeKeys": [
+    "custom_js",
+    "customJs",
+    "custom_javascript",
+    "customJavascript",
+    "custom_script",
+    "customScript",
+    "custom_code",
+    "customCode"
+  ]
+}

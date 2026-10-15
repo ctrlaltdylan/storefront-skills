@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "storefront-skills",
+  "owner": {
+    "name": "Dylan Pierce",
+    "email": "dylan@getverdict.com"
+  },
+  "metadata": {
+    "description": "Claude Code skills for Shopify merchants and developers",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "storefront-security",
+      "source": "./plugins/storefront-security",
+      "description": "Security checks for Shopify storefronts, starting with a browser-based test for checkout hijacking and phishing redirects",
+      "version": "1.0.0",
+      "author": {
+        "name": "Dylan Pierce",
+        "email": "dylan@getverdict.com"
+      },
+      "keywords": ["shopify", "security", "checkout", "phishing", "playwright"]
+    }
+  ]
+}
