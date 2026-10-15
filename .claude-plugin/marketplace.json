@@ -19,7 +19,14 @@
         "name": "Dylan Pierce",
         "email": "dylan@getverdict.com"
       },
-      "keywords": ["shopify", "security", "checkout", "phishing", "playwright"]
+      "keywords": [
+        "shopify",
+        "security",
+        "checkout",
+        "phishing",
+        "playwright"
+      ],
+      "license": "MIT"
     }
   ]
 }

@@ -78,3 +78,7 @@ Known domains and code markers live in [`indicators.json`](plugins/storefront-se
 claude plugin marketplace update storefront-skills
 claude plugin update storefront-security@storefront-skills
 ```
+
+## License
+
+[MIT](LICENSE)
