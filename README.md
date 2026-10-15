@@ -1,6 +1,6 @@
 # storefront-skills
 
-AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, and other agents that can drive a browser.
+AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, Muse, and other agents that can drive a browser.
 
 ## Plugins
 
@@ -36,6 +36,14 @@ git clone https://github.com/ctrlaltdylan/storefront-skills.git
 openclaw skills install ./storefront-skills/plugins/storefront-security/skills/checkout-hijack-check
 ```
 
+**Muse Code:** copy the skill into Muse's skills folder, run `muse skills list` to confirm it's there, then ask Muse to check your store's checkout.
+
+```bash
+git clone https://github.com/ctrlaltdylan/storefront-skills.git
+mkdir -p ~/.agents/skills
+cp -R storefront-skills/plugins/storefront-security/skills/checkout-hijack-check ~/.agents/skills/
+```
+
 **Claude Code:** install the plugin, restart Claude Code, then run `/check-checkout https://yourstore.com`.
 
 ```bash
@@ -43,7 +51,7 @@ claude plugin marketplace add ctrlaltdylan/storefront-skills
 claude plugin install storefront-security@storefront-skills
 ```
 
-OpenClaw and Claude Code run the full script when Node.js 18 or newer is installed. Browser-only assistants follow the same steps by hand, but they can't inspect app API responses, so they won't catch a `WARN`.
+OpenClaw, Muse Code, and Claude Code run the full script when Node.js 18 or newer is installed. Browser-only assistants follow the same steps by hand, but they can't inspect app API responses, so they won't catch a `WARN`.
 
 ### Run it without Claude Code
 
