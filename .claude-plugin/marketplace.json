@@ -11,10 +11,10 @@
   },
   "plugins": [
     {
-      "name": "storefront-security",
-      "source": "./plugins/storefront-security",
+      "name": "storefront-sec",
+      "source": "./plugins/storefront-sec",
       "description": "Security checks for Shopify storefronts, starting with a browser-based test for checkout hijacking and phishing redirects",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "author": {
         "name": "Dylan Pierce",
         "email": "dylan@getverdict.com"

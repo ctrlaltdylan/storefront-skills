@@ -6,7 +6,7 @@ AI agent skills for Shopify merchants and developers. They work with Claude, Gro
 
 | Plugin | Provides |
 | --- | --- |
-| `storefront-security` | `/check-checkout` command and `checkout-hijack-check` skill. Opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects or known attack indicators. |
+| `storefront-sec` | `/storefront-sec:checkout:hijack-scan` command and `checkout-hijack-scan` skill. Opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects or known attack indicators. |
 
 ## Check your store's checkout
 
@@ -33,7 +33,7 @@ It stops at the checkout page and never enters or submits anything. Each run lea
 
 ```bash
 git clone https://github.com/ctrlaltdylan/storefront-skills.git
-openclaw skills install ./storefront-skills/plugins/storefront-security/skills/checkout-hijack-check
+openclaw skills install ./storefront-skills/plugins/storefront-sec/skills/checkout-hijack-scan
 ```
 
 **Muse Code:** copy the skill into Muse's skills folder, run `muse skills list` to confirm it's there, then ask Muse to check your store's checkout.
@@ -41,14 +41,14 @@ openclaw skills install ./storefront-skills/plugins/storefront-security/skills/c
 ```bash
 git clone https://github.com/ctrlaltdylan/storefront-skills.git
 mkdir -p ~/.agents/skills
-cp -R storefront-skills/plugins/storefront-security/skills/checkout-hijack-check ~/.agents/skills/
+cp -R storefront-skills/plugins/storefront-sec/skills/checkout-hijack-scan ~/.agents/skills/
 ```
 
-**Claude Code:** install the plugin, restart Claude Code, then run `/check-checkout https://yourstore.com`.
+**Claude Code:** install the plugin, restart Claude Code, then run `/storefront-sec:checkout:hijack-scan https://yourstore.com`.
 
 ```bash
 claude plugin marketplace add ctrlaltdylan/storefront-skills
-claude plugin install storefront-security@storefront-skills
+claude plugin install storefront-sec@storefront-skills
 ```
 
 OpenClaw, Muse Code, and Claude Code run the full script when Node.js 18 or newer is installed. Browser-only assistants follow the same steps by hand, but they can't inspect app API responses, so they won't catch a `WARN`.
@@ -59,7 +59,7 @@ OpenClaw, Muse Code, and Claude Code run the full script when Node.js 18 or newe
 git clone https://github.com/ctrlaltdylan/storefront-skills.git
 mkdir -p /tmp/checkout-check && cd /tmp/checkout-check
 npm init -y >/dev/null && npm i playwright@1.63.0 && npx playwright install chromium
-node ~/path/to/storefront-skills/plugins/storefront-security/skills/checkout-hijack-check/scripts/check-checkout.mjs https://yourstore.com --runs 3
+node ~/path/to/storefront-skills/plugins/storefront-sec/skills/checkout-hijack-scan/scripts/check-checkout.mjs https://yourstore.com --runs 3
 ```
 
 | Flag | Use it when |
@@ -83,13 +83,20 @@ A `PASS` is good news, not a guarantee. Attacks can target certain countries, de
 
 ### Indicators
 
-Known domains and code markers live in [`indicators.json`](plugins/storefront-security/skills/checkout-hijack-check/scripts/indicators.json). Pull requests with new, published indicators are welcome.
+Known domains and code markers live in [`indicators.json`](plugins/storefront-sec/skills/checkout-hijack-scan/scripts/indicators.json). Pull requests with new, published indicators are welcome.
 
 ## Updating
 
 ```bash
 claude plugin marketplace update storefront-skills
-claude plugin update storefront-security@storefront-skills
+claude plugin update storefront-sec@storefront-skills
+```
+
+Installed it before version 2.0.0? The plugin was renamed from `storefront-security`, so swap it out:
+
+```bash
+claude plugin uninstall storefront-security@storefront-skills
+claude plugin install storefront-sec@storefront-skills
 ```
 
 ## License

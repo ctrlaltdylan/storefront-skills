@@ -1,5 +1,5 @@
 ---
-name: checkout-hijack-check
+name: checkout-hijack-scan
 description: Checks a Shopify store for checkout hijacking, where injected JavaScript sends shoppers to a fake checkout that steals card details. Opens the store in a fresh browser, adds a product to the cart, clicks Checkout, and reports where the shopper lands plus any known attack indicators. Use when a merchant wants to test their own storefront, suspects a phishing redirect, or asks about the October 2026 "fake checkout" / custom JS campaign.
 allowed-tools: Bash, Read
 ---
@@ -34,7 +34,7 @@ Ask for the storefront URL if you don't have it, such as `https://mystore.com` o
 Run this once per machine. Don't install into the user's project.
 
 ```bash
-mkdir -p "${TMPDIR:-/tmp}/checkout-hijack-check" && cd "${TMPDIR:-/tmp}/checkout-hijack-check"
+mkdir -p "${TMPDIR:-/tmp}/checkout-hijack-scan" && cd "${TMPDIR:-/tmp}/checkout-hijack-scan"
 [ -f package.json ] || npm init -y >/dev/null
 npm i playwright@1.63.0 && npx playwright install chromium
 ```
@@ -44,7 +44,7 @@ npm i playwright@1.63.0 && npx playwright install chromium
 Run from that same folder. The script lives next to this file in `scripts/`. In OpenClaw, that folder is `{baseDir}`.
 
 ```bash
-cd "${TMPDIR:-/tmp}/checkout-hijack-check"
+cd "${TMPDIR:-/tmp}/checkout-hijack-scan"
 node <this-skill-dir>/scripts/check-checkout.mjs https://mystore.com --runs 3
 ```
 
