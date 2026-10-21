@@ -1,0 +1,40 @@
+{% assign config = product.metafields['$app:upsell'].settings.value %}
+{% assign label = block.settings.button_label | escape %}
+<div class="upsell" data-title="{{ block.settings.heading | escape }}">
+  <h2>{{ block.settings.heading | escape }}</h2>
+  <button title="{{ label }}">{{ label }}</button>
+  {%- if block.settings.link contains 'https://' -%}
+    {% # escape-scan-ignore: scheme checked above %}
+    <a href="{{ block.settings.link | escape }}">More</a>
+  {%- endif -%}
+  <p>{{ config.tagline | escape }}</p>
+  <div class="rte">{{ block.settings.description }}</div>
+  {% render 'badge', text: block.settings.badge_text %}
+  <span>{{ block.settings.count | plus: 1 }}</span>
+</div>
+<script>
+  window.upsell = {{ config | json }};
+  window.upsellTitle = {{ block.settings.heading | json }};
+</script>
+<script type="application/json" id="upsell-data">{{ block.settings | json }}</script>
+<style>
+  .upsell h2 { color: {{ block.settings.color }}; }
+  {{ block.settings.custom_css | replace: '</', '<\/' }}
+</style>
+<p>You searched for {{ search.terms | escape }}</p>
+{% schema %}
+{
+  "name": "Upsell",
+  "target": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "color", "id": "color", "label": "Color" },
+    { "type": "number", "id": "count", "label": "Count" },
+    { "type": "textarea", "id": "custom_css", "label": "Custom CSS" },
+    { "type": "text", "id": "badge_text", "label": "Badge" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,38 @@
+{% assign config = product.metafields.my_app.settings.value %}
+{% assign label = block.settings.button_label %}
+<div class="upsell" data-title={{ block.settings.heading | escape }}>
+  <h2>{{ block.settings.heading }}</h2>
+  <button title="{{ label }}">{{ label }}</button>
+  <a href="{{ block.settings.link | escape }}">More</a>
+  <p>{{ config.tagline | strip_html }}</p>
+  <h3>{{ config.headline }}</h3>
+  <p>{{ 'upsell.save_html' | t: amount: config.discount }}</p>
+  <img src="x" onclick="track('{{ block.settings.heading | escape }}')">
+  {{ block.settings.custom_html }}
+  {% render 'badge', text: block.settings.badge_text %}
+</div>
+<script>
+  window.upsell = { title: '{{ block.settings.heading }}', note: "{{ label | escape }}", color: {{ block.settings.color | json }} };
+  var raw = {{ config.custom_js }};
+  var quoted = "{{ config | json }}";
+</script>
+<style>
+  .upsell { {{ block.settings.custom_css }} }
+  .upsell h2 { color: {{ block.settings.color }}; }
+</style>
+<p>You searched for {{ search.terms }}</p>
+{% schema %}
+{
+  "name": "Upsell",
+  "target": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "color", "id": "color", "label": "Color" },
+    { "type": "html", "id": "custom_html", "label": "Custom HTML" },
+    { "type": "textarea", "id": "custom_css", "label": "Custom CSS" },
+    { "type": "text", "id": "badge_text", "label": "Badge" }
+  ]
+}
+{% endschema %}
