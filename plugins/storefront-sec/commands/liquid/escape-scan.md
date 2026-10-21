@@ -2,7 +2,7 @@
 description: Scan a Shopify theme or theme app extension for unescaped output and dynamic code
 ---
 
-Load the `storefront-sec:theme-escape-scan` skill and follow it to scan this path:
+Load the `storefront-sec:liquid-escape-scan` skill and follow it to scan this path:
 
 $ARGUMENTS
 

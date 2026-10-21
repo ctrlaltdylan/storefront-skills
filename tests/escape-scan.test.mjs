@@ -1,4 +1,4 @@
-// Run with: node --test tests/
+// Run with: node --test tests/*.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const script = join(here, '..', 'plugins', 'storefront-sec', 'skills', 'theme-escape-scan', 'scripts', 'escape-scan.mjs');
+const script = join(here, '..', 'plugins', 'storefront-sec', 'skills', 'liquid-escape-scan', 'scripts', 'escape-scan.mjs');
 
 function scan(fixture) {
   const res = spawnSync(process.execPath, [script, join(here, 'fixtures', fixture), '--json'], { encoding: 'utf8' });

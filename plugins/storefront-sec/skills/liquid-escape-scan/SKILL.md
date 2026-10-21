@@ -1,5 +1,5 @@
 ---
-name: theme-escape-scan
+name: liquid-escape-scan
 description: Scans a Shopify theme or theme app extension for output that isn't escaped for where it lands (HTML, attributes, <script>, <style>), settings read from public metafield namespaces, and JavaScript that runs strings as code. Use when a developer wants to harden a theme app extension or theme, review Liquid for XSS, check that metafields and settings are escaped, or asks how to protect against the October 2026 checkout hijack where app settings injected JavaScript.
 allowed-tools: Bash, Read
 ---

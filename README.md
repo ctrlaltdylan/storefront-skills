@@ -7,7 +7,7 @@ AI agent skills for Shopify merchants and developers. They work with Claude, Gro
 | Plugin | Provides |
 | --- | --- |
 | `storefront-sec` | `/storefront-sec:checkout:hijack-scan` and the `checkout-hijack-scan` skill: opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects or known attack indicators. |
-| | `/storefront-sec:theme:escape-scan` and the `theme-escape-scan` skill: scans a theme or theme app extension for output that isn't escaped, public metafield namespaces, and JavaScript that runs strings as code. |
+| | `/storefront-sec:liquid:escape-scan` and the `liquid-escape-scan` skill: scans a theme or theme app extension for output that isn't escaped, public metafield namespaces, and JavaScript that runs strings as code. |
 
 ## Check your store's checkout
 
@@ -100,14 +100,14 @@ It checks that every value is escaped for where it lands:
 
 It also flags theme app extensions that read settings from public metafield namespaces instead of `$app:`, and `eval`, `new Function`, and `innerHTML` with variables in your JavaScript. Values are followed through `assign`, `for`, and snippet parameters, and each file's `{% schema %}` is read so constrained settings like `color` aren't flagged.
 
-**Claude Code:** with the plugin installed, run `/storefront-sec:theme:escape-scan` from your app or theme folder.
+**Claude Code:** with the plugin installed, run `/storefront-sec:liquid:escape-scan` from your app or theme folder.
 
-**OpenClaw or Muse Code:** install the `theme-escape-scan` skill the same way as above, then ask your agent to scan your theme app extension for unescaped output.
+**OpenClaw or Muse Code:** install the `liquid-escape-scan` skill the same way as above, then ask your agent to scan your theme app extension for unescaped output.
 
 **Anything else:** it's one Node.js 18+ script with no dependencies.
 
 ```bash
-node storefront-skills/plugins/storefront-sec/skills/theme-escape-scan/scripts/escape-scan.mjs path/to/your-app
+node storefront-skills/plugins/storefront-sec/skills/liquid-escape-scan/scripts/escape-scan.mjs path/to/your-app
 ```
 
 Point it at an app folder (it finds `extensions/`), one extension, or a theme. Add `--json` for CI. It exits with `1` on `FAIL`, `2` on `WARN` only, and `0` when clean.
