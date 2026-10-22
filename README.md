@@ -2,12 +2,14 @@
 
 AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, Muse, and other agents that can drive a browser or run commands.
 
-## Plugins
+## Skills
 
-| Plugin | Provides |
-| --- | --- |
-| `storefront-sec` | `/storefront-sec:checkout:hijack-scan` and the `checkout-hijack-scan` skill: opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects or known attack indicators. |
-| | `/storefront-sec:liquid:escape-scan` and the `liquid-escape-scan` skill: scans a theme or theme app extension for output that isn't escaped, public metafield namespaces, and JavaScript that runs strings as code. |
+| Skill | For | What it does |
+| --- | --- | --- |
+| [Checkout hijack scan](#check-your-stores-checkout) | Merchants | Opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects |
+| [Liquid escape scan](#scan-your-theme-or-app-extension-for-unescaped-output) | Developers | Finds unescaped output, public metafield namespaces, and dynamic code in themes and app extensions |
+
+All skills ship in the `storefront-sec` plugin. In Claude Code, each one is also a command: `/storefront-sec:checkout:hijack-scan` and `/storefront-sec:liquid:escape-scan`.
 
 ## Check your store's checkout
 
