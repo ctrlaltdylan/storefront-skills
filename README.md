@@ -1,12 +1,15 @@
 # storefront-skills
 
-AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, Muse, and other agents that can drive a browser.
+AI agent skills for Shopify merchants and developers. They work with Claude, Grok, OpenClaw, Muse, and other agents that can drive a browser or run commands.
 
-## Plugins
+## Skills
 
-| Plugin | Provides |
-| --- | --- |
-| `storefront-sec` | `/storefront-sec:checkout:hijack-scan` command and `checkout-hijack-scan` skill. Opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects or known attack indicators. |
+| Skill | For | What it does |
+| --- | --- | --- |
+| [Checkout hijack scan](#check-your-stores-checkout) | Merchants | Opens your store in a fresh browser, clicks **Checkout**, and flags phishing redirects |
+| [Liquid escape scan](#scan-your-theme-or-app-extension-for-unescaped-output) | Developers | Finds unescaped output, public metafield namespaces, and dynamic code in themes and app extensions |
+
+All skills ship in the `storefront-sec` plugin. In Claude Code, each one is also a command: `/storefront-sec:checkout:hijack-scan` and `/storefront-sec:liquid:escape-scan`.
 
 ## Check your store's checkout
 
@@ -84,6 +87,40 @@ A `PASS` is good news, not a guarantee. Attacks can target certain countries, de
 ### Indicators
 
 Known domains and code markers live in [`indicators.json`](plugins/storefront-sec/skills/checkout-hijack-scan/scripts/indicators.json). Pull requests with new, published indicators are welcome.
+
+## Scan your theme or app extension for unescaped output
+
+For developers. The October 2026 attack worked because app settings became code on the storefront. This scan checks the Liquid and JavaScript you ship for the same kind of gap, based on Kirill Platonov's [Protect your Shopify theme app extensions from script injection](https://kirillplatonov.com/posts/protect-shopify-theme-app-extensions/).
+
+It checks that every value is escaped for where it lands:
+
+| Where the value lands | What makes it safe |
+| --- | --- |
+| HTML text or a quoted attribute | `\| escape` |
+| Inside `<script>` | `\| json`, with no quotes around it |
+| Inside `<style>` | `\| replace: '</', '<\/'` |
+
+It also flags theme app extensions that read settings from public metafield namespaces instead of `$app:`, and `eval`, `new Function`, and `innerHTML` with variables in your JavaScript. Values are followed through `assign`, `for`, and snippet parameters, and each file's `{% schema %}` is read so constrained settings like `color` aren't flagged.
+
+**Claude Code:** with the plugin installed, run `/storefront-sec:liquid:escape-scan` from your app or theme folder.
+
+**OpenClaw or Muse Code:** install the `liquid-escape-scan` skill the same way as above, then ask your agent to scan your theme app extension for unescaped output.
+
+**Anything else:** it's one Node.js 18+ script with no dependencies.
+
+```bash
+node storefront-skills/plugins/storefront-sec/skills/liquid-escape-scan/scripts/escape-scan.mjs path/to/your-app
+```
+
+Point it at an app folder (it finds `extensions/`), one extension, or a theme. Add `--json` for CI. It exits with `1` on `FAIL`, `2` on `WARN` only, and `0` when clean.
+
+| Result | Meaning |
+| --- | --- |
+| `FAIL` | App data (metafields in a theme app extension) or search terms reach the page unescaped, or JavaScript runs strings as code |
+| `WARN` | Settings that only theme editors can change are unescaped, plus patterns worth a look, like `innerHTML` |
+| `PASS` | None of these patterns were found |
+
+Mark a reviewed line with a comment containing `escape-scan-ignore`. Run the tests with `node --test tests/*.test.mjs`.
 
 ## Updating
 

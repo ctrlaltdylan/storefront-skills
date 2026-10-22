@@ -1,7 +1,7 @@
 {
   "name": "storefront-sec",
-  "description": "Security checks for Shopify storefronts, starting with a browser-based test for checkout hijacking and phishing redirects",
-  "version": "2.0.0",
+  "description": "Security checks for Shopify storefronts: a browser test for checkout hijacking and phishing redirects, and a scan for unescaped output in themes and theme app extensions",
+  "version": "2.1.0",
   "author": {
     "name": "Dylan Pierce",
     "email": "dylan@getverdict.com"
